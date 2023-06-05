@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/FaceTracker/FaceRecognitionDNN.cpp
+/FaceTracker/FaceRecognitionONNX.cpp
+/FaceTracker/Source.cpp
