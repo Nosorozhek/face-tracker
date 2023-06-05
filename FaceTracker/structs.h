@@ -9,3 +9,8 @@ struct Point3f
 {
     float x, y, z;
 };
+
+struct Polygon
+{
+    float *a, b, c;
+};
