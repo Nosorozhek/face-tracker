@@ -8,8 +8,8 @@
 class Model
 {
    private:
-    std::vector<Point3f> vertexes_;
-    std::vector<Polygon> polygons_;
+    std::vector<Vector3F> vertexes_;
+    std::vector<Face> faces_;
 public:
     Model(std::string path);
 };

@@ -1,16 +1,16 @@
 #pragma once
 
-struct Point2f
+struct Vector2F
 {
     float x, y;
 };
 
-struct Point3f
+struct Vector3F
 {
     float x, y, z;
 };
 
-struct Polygon
+struct Face
 {
-    float *a, b, c;
+    int a, b, c;
 };
