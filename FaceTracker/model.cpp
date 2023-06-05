@@ -5,6 +5,13 @@
 #include <sstream>
 #include <string>
 
+// Default constructor
+Model::Model()
+{
+    vertexes_ = std::vector<Vector3F>();
+    faces_ = std::vector<Face>();
+}
+
 // Load model from .obj file
 Model::Model(std::string path)
 {

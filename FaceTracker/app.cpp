@@ -9,5 +9,8 @@ App::App()
                                           0.3,  // NMS Threshold
                                           5);
     source_model_ = Model("path");
-    obtained_model_ = source_model_;
+    obtained_model_ = Model("path");
 }
+
+App::~App()
+{ return; }

@@ -11,5 +11,6 @@ class Model
     std::vector<Vector3F> vertexes_;
     std::vector<Face> faces_;
 public:
+    Model();
     Model(std::string path);
 };
