@@ -155,13 +155,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="app.cpp" />
     <ClCompile Include="FaceRecognitionDNN.cpp" />
     <ClCompile Include="FaceRecognitionONNX.cpp" />
+    <ClCompile Include="landmark_generator.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="model.cpp" />
+    <ClCompile Include="model_generator.cpp" />
+    <ClCompile Include="model_rendering.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-format" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="app.h" />
+    <ClInclude Include="structs.h" />
+    <ClInclude Include="model.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
