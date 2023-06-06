@@ -8,7 +8,7 @@
 class Model
 {
    private:
-    std::vector<Vector3F> vertexes_;
+    std::vector<Vector3F> vertices_;
     std::vector<Face> faces_;
 public:
     Model();
