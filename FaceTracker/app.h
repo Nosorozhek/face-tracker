@@ -22,8 +22,7 @@ class App
     std::queue<std::vector<Vector2F>> facial_points_;
     Model source_model_;
     Model obtained_model_;
-    sf::RenderWindow window_ =
-        sf::RenderWindow(sf::VideoMode(600, 600), "App");
+    sf::RenderWindow window_ {sf::VideoMode(600, 600), "App"};
 
    public:
     App();
