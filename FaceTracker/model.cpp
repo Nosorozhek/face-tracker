@@ -8,14 +8,14 @@
 // Default constructor
 Model::Model()
 {
-    vertexes_ = std::vector<Vector3F>();
+    vertices_ = std::vector<Vector3F>();
     faces_ = std::vector<Face>();
 }
 
 // Load model from .obj file
 Model::Model(std::string path)
 {
-    vertexes_ = std::vector<Vector3F>();
+    vertices_ = std::vector<Vector3F>();
     faces_ = std::vector<Face>();
 
     // Open .obj file
@@ -39,7 +39,7 @@ Model::Model(std::string path)
             v >> y;
             v >> z;
             Vector3F vertex = {x, y, z};
-            vertexes_.push_back(vertex);
+            vertices_.push_back(vertex);
         }
         // Check for faces
         else if (line.substr(0, 2) == "f ")
