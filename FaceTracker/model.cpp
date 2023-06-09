@@ -5,19 +5,9 @@
 
 #include "model.h"
 
-// Default constructor
-Model::Model()
-{
-    vertices_ = std::vector<sf::Vector3f>();
-    faces_ = std::vector<sf::Vector3i>();
-}
-
 // Load model from .obj file
 Model::Model(const std::string &path)
 {
-    vertices_ = std::vector<sf::Vector3f>();
-    faces_ = std::vector<sf::Vector3i>();
-
     // Open .obj file
     std::ifstream file(path, std::ios::in);
     if (!file)
@@ -29,7 +19,7 @@ Model::Model(const std::string &path)
     std::string line;
     while (std::getline(file, line))
     {
-        // Check for vertexes
+        // Check for vertices
         if (line.substr(0, 2) == "v ")
         {
             std::istringstream v(line.substr(2));
@@ -50,16 +40,16 @@ Model::Model(const std::string &path)
             f >> a;
             f >> b;
             f >> c;
-            sf::Vector3i face = {a--, b--, c--};
+            sf::Vector3i face = {--a, --b, --c};
             faces_.push_back(face);
         }
     }
 }
 
-std::vector<sf::Vector3f> Model::GetVertices() { return vertices_; }
+const std::vector<sf::Vector3f>& Model::GetVertices() const { return vertices_; }
 
-void Model::SetVertices(std::vector<sf::Vector3f> vertices) { vertices_ = vertices; }
+void Model::SetVertices(std::vector<sf::Vector3f> vertices) { vertices_ = std::move(vertices); }
 
-std::vector<sf::Vector3i> Model::GetFaces() { return faces_; }
+const std::vector<sf::Vector3i>& Model::GetFaces() const { return faces_; }
 
-void Model::SetFaces(std::vector<sf::Vector3i> faces) { faces_ = faces; }
+void Model::SetFaces(std::vector<sf::Vector3i> faces) { faces_ = std::move(faces); }

@@ -8,11 +8,11 @@
 class Model
 {
    public:
-    Model();
-    Model(const std::string &path);
-    std::vector<sf::Vector3f> GetVertices();
+    Model() = default;
+    explicit Model(const std::string &path);
+    [[nodiscard]] const std::vector<sf::Vector3f>& GetVertices() const;
     void SetVertices(std::vector<sf::Vector3f> vertices);
-    std::vector<sf::Vector3i> GetFaces();
+    [[nodiscard]] const std::vector<sf::Vector3i>& GetFaces() const;
     void SetFaces(std::vector<sf::Vector3i> faces);
    private:
     std::vector<sf::Vector3f> vertices_;

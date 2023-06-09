@@ -6,7 +6,7 @@
 #include "app.h"
 
 // This func finds biggest face of all in the frame
-cv::Rect_<int> BiggestFace(cv::Mat faces);
+cv::Rect2i GetBiggestFace(cv::Mat& faces);
 
 void App::RecognizeLandmarks()
 {
@@ -17,8 +17,7 @@ void App::RecognizeLandmarks()
         std::cout << "Can't grab the frame" << std::endl;
         return;
     }
-    resize(frame, frame, cv::Size(frame_width_, frame_height_), 0, 0,
-           cv::INTER_LINEAR_EXACT);
+    resize(frame, frame, cv::Size(frame_width_, frame_height_));
     // Inference
     cv::Mat all_faces;
     face_detector_->detect(frame, all_faces);
@@ -27,12 +26,12 @@ void App::RecognizeLandmarks()
         std::cout << "No faces detected" << std::endl;
         return;
     }
-    const cv::Rect_<int> face = BiggestFace(all_faces);
+    const cv::Rect2i face = GetBiggestFace(all_faces);
     std::vector<std::vector<cv::Point2f>> landmarks;
     cv::Mat grey;
     cvtColor(frame, grey, cv::COLOR_BGR2GRAY);
 
-    landmark_detector_->fit(grey, std::vector<cv::Rect_<int>>(1, face),
+    landmark_detector_->fit(grey, std::vector<cv::Rect2i>{face},
                             landmarks);
     facial_points_.push(landmarks[0]);
     if (facial_points_.size() > 3)
@@ -43,14 +42,13 @@ void App::RecognizeLandmarks()
 
 
 //This func finds biggest face of all in the frame
-cv::Rect_<int> BiggestFace(cv::Mat faces)
+cv::Rect2i GetBiggestFace(cv::Mat& faces)
 {
     int right_face = 0;
     int max_height = 0;
     for (int face = 0; face < faces.rows; face++)
     {
-        const int height = static_cast<int>(faces.at<float>(face, 0)) -
-                           static_cast<int>(faces.at<float>(face, 2));
+        const int height = (faces.at<int>(face, 0)) - (faces.at<int>(face, 2));
         if (height > max_height)
         {
             right_face = face;
