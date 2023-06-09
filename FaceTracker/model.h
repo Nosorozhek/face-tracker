@@ -2,15 +2,14 @@
 
 #include <string>
 #include <vector>
-
-#include "structs.h"
+#include <SFML/Graphics.hpp>
 
 class Model
 {
-   private:
-    std::vector<Vector3F> vertices_;
-    std::vector<Face> faces_;
-public:
+   public:
     Model();
-    Model(std::string path);
+    Model(const std::string &path);
+   private:
+    std::vector<sf::Vector3f> vertices_;
+    std::vector<sf::Vector3i> faces_;
 };

@@ -2,9 +2,9 @@
 
 App::App()
 {
-    cv::VideoCapture capture_(0); //This thing recieves pictures from camera
-    frameWidth_ = int(capture_.get(cv::CAP_PROP_FRAME_WIDTH));
-    frameHeight_ = int(capture_.get(cv::CAP_PROP_FRAME_HEIGHT));
+    cv::VideoCapture capture_(0); //This thing receives pictures from camera
+    frame_width_ = static_cast<int>(capture_.get(cv::CAP_PROP_FRAME_WIDTH));
+    frame_height_ = static_cast<int>(capture_.get(cv::CAP_PROP_FRAME_HEIGHT));
     // Some AI tracking faces on the frame
     face_detector_ = cv::FaceDetectorYN::create("data/DNN/yunet_s_320_320.onnx", "",
                                           cv::Size(320, 320),
@@ -12,7 +12,7 @@ App::App()
                                           0.3,  // NMS Threshold
                                           5     //topK
                                           );
-    face_detector_->setInputSize(cv::Size(frameWidth_, frameHeight_));
+    face_detector_->setInputSize(cv::Size(frame_width_, frame_height_));
     // Some AI to find landmarks on received faces
     landmark_detector_ = cv::face::FacemarkLBF::create();
     landmark_detector_->loadModel("data/lbfmodel.yaml");

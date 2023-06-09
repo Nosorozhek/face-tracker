@@ -8,15 +8,15 @@
 // Default constructor
 Model::Model()
 {
-    vertices_ = std::vector<Vector3F>();
-    faces_ = std::vector<Face>();
+    vertices_ = std::vector<sf::Vector3f>();
+    faces_ = std::vector<sf::Vector3i>();
 }
 
 // Load model from .obj file
-Model::Model(std::string path)
+Model::Model(const std::string &path)
 {
-    vertices_ = std::vector<Vector3F>();
-    faces_ = std::vector<Face>();
+    vertices_ = std::vector<sf::Vector3f>();
+    faces_ = std::vector<sf::Vector3i>();
 
     // Open .obj file
     std::ifstream file(path, std::ios::in);
@@ -38,7 +38,7 @@ Model::Model(std::string path)
             v >> x;
             v >> y;
             v >> z;
-            Vector3F vertex = {x, y, z};
+            sf::Vector3f vertex = {x, y, z};
             vertices_.push_back(vertex);
         }
         // Check for faces
@@ -50,7 +50,7 @@ Model::Model(std::string path)
             f >> a;
             f >> b;
             f >> c;
-            Face face = {a--,b--,c--};
+            sf::Vector3i face = {a--, b--, c--};
             faces_.push_back(face);
         }
     }
