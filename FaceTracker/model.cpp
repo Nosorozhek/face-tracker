@@ -1,9 +1,9 @@
-#include "model.h"
-
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
+
+#include "model.h"
 
 // Default constructor
 Model::Model()
@@ -55,3 +55,11 @@ Model::Model(const std::string &path)
         }
     }
 }
+
+std::vector<sf::Vector3f> Model::GetVertices() { return vertices_; }
+
+void Model::SetVertices(std::vector<sf::Vector3f> vertices) { vertices_ = vertices; }
+
+std::vector<sf::Vector3i> Model::GetFaces() { return faces_; }
+
+void Model::SetFaces(std::vector<sf::Vector3i> faces) { faces_ = faces; }

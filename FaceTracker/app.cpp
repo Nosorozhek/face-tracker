@@ -2,7 +2,7 @@
 
 App::App()
 {
-    cv::VideoCapture capture_(0); //This thing receives pictures from camera
+    //cv::VideoCapture capture_(0); //This thing receives pictures from camera
     frame_width_ = static_cast<int>(capture_.get(cv::CAP_PROP_FRAME_WIDTH));
     frame_height_ = static_cast<int>(capture_.get(cv::CAP_PROP_FRAME_HEIGHT));
     // Some AI tracking faces on the frame
@@ -19,6 +19,8 @@ App::App()
 
     source_model_ = Model("path");
     obtained_model_ = Model("path");
+
+    window_.setActive(true);
 }
 
 App::~App()
