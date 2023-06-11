@@ -1,5 +1,6 @@
 #include <opencv2/dnn.hpp>
 #include <opencv2/imgproc.hpp>
+#include <opencv2/highgui.hpp>
 
 #include <iostream>
 
@@ -7,6 +8,8 @@
 
 // This func finds biggest face of all in the frame
 cv::Rect2i GetBiggestFace(cv::Mat& faces);
+
+void Visualize(cv::Mat& frame, const std::vector<cv::Point2f>& landmarks);
 
 void App::RecognizeLandmarks()
 {
@@ -38,10 +41,12 @@ void App::RecognizeLandmarks()
     {
         facial_points_.pop();
     }
+
+    Visualize(frame, landmarks[0]);
 }
 
 
-//This func finds biggest face of all in the frame
+//Finds biggest face of all in the frame
 cv::Rect2i GetBiggestFace(cv::Mat& faces)
 {
     int right_face = 0;
@@ -60,4 +65,41 @@ cv::Rect2i GetBiggestFace(cv::Mat& faces)
             static_cast<int>(faces.at<float>(right_face, 1)),
             static_cast<int>(faces.at<float>(right_face, 2)),
             static_cast<int>(faces.at<float>(right_face, 3))};
+}
+
+// Displays landmarks just for debugging
+void Visualize(cv::Mat& frame, const std::vector<cv::Point2f>& landmarks)
+{
+    int point = 0;
+    // Face contour and chin
+    for (; point < 17; point++)
+    {
+        circle(frame, landmarks[point], 2, cv::Scalar(255, 255, 0), -1, 8);
+    }
+    // Left eyebrow
+    for (; point < 22; point++)
+    {
+        circle(frame, landmarks[point], 2, cv::Scalar(0, 255, 0), -1, 8);
+    }
+    // Right eyebrow
+    for (; point < 27; point++)
+    {
+        circle(frame, landmarks[point], 2, cv::Scalar(255, 0, 0), -1, 8);
+    }
+    // Nose
+    for (; point < 36; point++)
+    {
+        circle(frame, landmarks[point], 2, cv::Scalar(255, 0, 255), -1, 8);
+    }
+    // Eyes
+    for (; point < 48; point++)
+    {
+        circle(frame, landmarks[point], 2, cv::Scalar(0, 0, 255), -1, 8);
+    }
+    // Lips contour
+    for (; point < 68; point++)
+    {
+        circle(frame, landmarks[point], 2, cv::Scalar(255, 255, 255), -1, 8);
+    }
+    cv::imshow("Landmarks", frame);
 }
