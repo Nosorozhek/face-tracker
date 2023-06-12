@@ -7,7 +7,6 @@
 
 #include <SFML/Graphics.hpp>
 
-#include <queue>
 #include <vector>
 
 #include "model.h"
@@ -22,7 +21,7 @@ class App
     void RenderModel();
 
    private:
-    std::queue<std::vector<cv::Point2f>> facial_points_;
+    std::list<std::vector<cv::Point2f>> facial_points_;
     Model source_model_;
     Model obtained_model_;
     sf::RenderWindow window_{sf::VideoMode(600, 600), "App"};

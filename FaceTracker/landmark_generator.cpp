@@ -9,7 +9,7 @@
 // This func finds biggest face of all in the frame
 cv::Rect2i GetBiggestFace(cv::Mat& faces);
 
-void Visualize(cv::Mat& frame, const std::vector<cv::Point2f>& landmarks);
+void VisualizeLandmarks(cv::Mat& frame, const std::vector<cv::Point2f>& landmarks);
 
 void App::RecognizeLandmarks()
 {
@@ -36,13 +36,13 @@ void App::RecognizeLandmarks()
 
     landmark_detector_->fit(grey, std::vector<cv::Rect2i>{face},
                             landmarks);
-    facial_points_.push(landmarks[0]);
+    facial_points_.push_back(landmarks[0]);
     if (facial_points_.size() > 3)
     {
-        facial_points_.pop();
+        facial_points_.pop_front();
     }
 
-    Visualize(frame, landmarks[0]);
+    VisualizeLandmarks(frame, landmarks[0]);
 }
 
 
@@ -68,7 +68,7 @@ cv::Rect2i GetBiggestFace(cv::Mat& faces)
 }
 
 // Displays landmarks just for debugging
-void Visualize(cv::Mat& frame, const std::vector<cv::Point2f>& landmarks)
+void VisualizeLandmarks(cv::Mat& frame, const std::vector<cv::Point2f>& landmarks)
 {
     int point = 0;
     // Face contour and chin
