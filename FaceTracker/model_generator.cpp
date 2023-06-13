@@ -21,6 +21,46 @@ void App::GenerateModel()
     {
         point /= static_cast<int>(facial_points_.size());
     }
+    /*
+     * These are the positions of all 68 points of the face.
+     * Their indexes in the array coincide with the numbers in the image.
+     * We need only some of them.
+     ________________________________________________________________________
+     |                                                                      |
+     |                    19                          24                    |
+     |               18        20                23        25               |
+     |           17                 21      22                 26           |
+     |                                                                      |
+     |                    37  38        27        43  44                    |
+     |    00           36        39            42        45           16    |
+     |                    41  40                  47  46                    |
+     |                                  28                                  |
+     |                                                                      |
+     |    01                                                          15    |
+     |                                  29                                  |
+     |                                                                      |
+     |                                                                      |
+     |     02                           30                           14     |
+     |                            31          35                            |
+     |                               32 33 34                               |
+     |                                                                      |
+     |      03                       50    52                       13      |
+     |                           49     51     53                           |
+     |                     48 60     61 62 63     64 54                     |
+     |                                                                      |
+     |         04               59   67 66 65   55               12         |
+     |                              58      56                              |
+     |                                  57                                  |
+     |              05                                      11              |
+     |                                                                      |
+     |                                                                      |
+     |                    06                          10                    |
+     |                                                                      |
+     |                          07              09                          |
+     |                                  08                                  |
+     |                                                                      |
+     |______________________________________________________________________|
+     */
 
     // Actual 2D image points
     std::vector<cv::Point2d> image_points;
@@ -31,7 +71,8 @@ void App::GenerateModel()
     image_points.push_back(avg_facial_points[48]);  // Left Mouth corner
     image_points.push_back(avg_facial_points[54]);  // Right mouth corner
 
-    // Predicted 3D model points
+    // These are the spatial coordinates of the facial points of a real person.
+    // At least, they are roughly like this.
     std::vector<cv::Point3d> model_points;
     model_points.emplace_back(0.0, 0.0, 0.0);          // Nose tip
     model_points.emplace_back(0.0, -330.0, -65.0);     // Chin

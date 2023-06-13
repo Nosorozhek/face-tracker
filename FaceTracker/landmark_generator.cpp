@@ -6,9 +6,10 @@
 
 #include "app.h"
 
-// This func finds biggest face of all in the frame
+// Finds the main face in the frame (maximum height)
 cv::Rect2i GetBiggestFace(cv::Mat& faces);
 
+// Displays facial points in a separate window (only for debugging)
 void VisualizeLandmarks(cv::Mat& frame, const std::vector<cv::Point2f>& landmarks);
 
 void App::RecognizeLandmarks()
@@ -68,7 +69,8 @@ cv::Rect2i GetBiggestFace(cv::Mat& faces)
 }
 
 // Displays landmarks just for debugging
-void VisualizeLandmarks(cv::Mat& frame, const std::vector<cv::Point2f>& landmarks)
+void VisualizeLandmarks(cv::Mat& frame,
+                        const std::vector<cv::Point2f>& landmarks)
 {
     int point = 0;
     // Face contour and chin
@@ -103,3 +105,5 @@ void VisualizeLandmarks(cv::Mat& frame, const std::vector<cv::Point2f>& landmark
     }
     cv::imshow("Landmarks", frame);
 }
+
+// More about these mysterious numbers(17, 22, 27, 36, 48, 68) can be found in the file model_generator.cpp
