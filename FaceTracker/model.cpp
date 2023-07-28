@@ -36,10 +36,20 @@ Model::Model(const std::string &path)
         {
             std::istringstream f(line.substr(2));
 
-            int a,b,c;
+            int a,b,c,d;
+            char t;
             f >> a;
+            f >> t;
+            f >> t;
+            f >> d;
             f >> b;
+            f >> t;
+            f >> t;
+            f >> d;
             f >> c;
+            f >> t;
+            f >> t;
+            f >> d;
             sf::Vector3i face = {--a, --b, --c};
             faces_.push_back(face);
         }

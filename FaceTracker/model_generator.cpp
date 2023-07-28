@@ -1,13 +1,19 @@
 #include <opencv2/calib3d.hpp>
 #include <opencv2/highgui.hpp>
-#include <opencv2/imgproc.hpp>
 
-#include <iostream>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include "app.h"
 
 void App::GenerateModel()
 {
+    if (facial_points_.empty())
+    {
+        return;
+    }
+
     // Averaging facial points
     std::vector<cv::Point2f> avg_facial_points(facial_points_.front().size());
     for (auto& landmarks : facial_points_)
@@ -21,6 +27,7 @@ void App::GenerateModel()
     {
         point /= static_cast<int>(facial_points_.size());
     }
+
     /*
      * These are the positions of all 68 points of the face.
      * Their indexes in the array coincide with the numbers in the image.
@@ -88,8 +95,7 @@ void App::GenerateModel()
     const cv::Mat camera_matrix =
         (cv::Mat_<double>(3, 3) << focal_length, 0, center.x, 0, focal_length,
          center.y, 0, 0, 1);
-    const cv::Mat distance_coefficients =
-        cv::Mat::zeros(4, 1, cv::DataType<double>::type);
+    const cv::Mat distance_coefficients = cv::Mat::zeros(4, 1, CV_64FC1);
 
     // Output rotation and translation
     cv::Mat rotation_vector;  // Rotation in axis-angle form
@@ -98,4 +104,28 @@ void App::GenerateModel()
     // Solve for pose
     cv::solvePnP(model_points, image_points, camera_matrix,
                  distance_coefficients, rotation_vector, translation_vector);
+
+    // Find the angle of rotation
+    auto theta =
+        static_cast<float>(sqrt(pow(rotation_vector.at<double>(0), 2) +
+                                pow(rotation_vector.at<double>(1), 2) +
+                                pow(rotation_vector.at<double>(2), 2)));
+
+    // Compute the face rotation matrix
+    auto rotation_matrix = glm::mat4(1.0f);
+    rotation_matrix = glm::rotate(
+        rotation_matrix, theta,
+        glm::vec3(rotation_vector.at<double>(0), rotation_vector.at<double>(1),
+                  rotation_vector.at<double>(2)));
+
+    // Calculate the position of all points
+    std::vector<sf::Vector3f> points = source_model_.GetVertices();
+    for (auto& point : points)
+    {
+        glm::vec4 glm_point(point.x, point.y, point.z, 1.0f);
+        glm_point = rotation_matrix * glm_point;
+
+        point = sf::Vector3f(glm_point.x, glm_point.y, glm_point.z);
+    }
+    obtained_model_.SetVertices(points);
 }
