@@ -1,3 +1,4 @@
-# face-tracker
-Hello whoever is reading this!
-Firstly I want to say that everybody who read this message will die soon! Enjoy the rest of you life)))
+## Requirements
+
+- OpenCV 4.x.x
+- SFML 2.x
